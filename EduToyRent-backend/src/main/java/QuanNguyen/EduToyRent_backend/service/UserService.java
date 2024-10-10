@@ -13,12 +13,14 @@ public class UserService {
     @Autowired
     private UserRepo userRepo;
 
+    public User getUserById(Integer id) throws Exception{
+        return userRepo.findById(id).orElseThrow(() -> new Exception("Không tìm thấy người dùng với UID: " + id));
+    }
+
     public List<User> getAll(){
         return userRepo.findAll();
     }
-    public User getById(Integer ID){
-        return userRepo.getUserById(ID);
-    }
+
     public User save(User user){
         return userRepo.save(user);
     }

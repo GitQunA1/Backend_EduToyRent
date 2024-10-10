@@ -19,8 +19,8 @@ public class UserController {
         return userService.getAll();
     }
     @GetMapping("/Users/{id}")
-    public User getById(@PathVariable Integer id){
-        return userService.getById(id);
+    public User getById(@PathVariable Integer id) throws Exception {
+        return userService.getUserById(id);
     }
 
     @PostMapping("/User")

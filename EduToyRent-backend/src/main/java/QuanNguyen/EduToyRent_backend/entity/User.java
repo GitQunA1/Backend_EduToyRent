@@ -1,44 +1,43 @@
 package QuanNguyen.EduToyRent_backend.entity;
-
 import jakarta.persistence.*;
-
 import java.io.Serializable;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "User")
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "UserID")
-    private Integer id;
-
-    @Column(name = "FullName")
-    private String fullname;
+    @Column(name = "UID")
+    private Integer uid;
 
     @Column(name = "Email")
     private String email;
 
-    public User(){}
+    @Column(name = "Phone")
+    private String phone;
 
-    public User(String fullname, String email) {
-        this.fullname = fullname;
+    @Column(name = "Password")
+    private String password;
+
+    @Column(name = "Role")
+    private String role;
+
+    public User() {
+    }
+
+    public User(String email, String phone, String password, String role) {
         this.email = email;
+        this.phone = phone;
+        this.password = password;
+        this.role = role;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getUid() {
+        return uid;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getFullname() {
-        return fullname;
-    }
-
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setUid(Integer uid) {
+        this.uid = uid;
     }
 
     public String getEmail() {
@@ -47,5 +46,29 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
