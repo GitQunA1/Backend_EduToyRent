@@ -9,5 +9,4 @@ public class EduToyRentalPlatformApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(EduToyRentalPlatformApplication.class, args);
 	}
-
 }
