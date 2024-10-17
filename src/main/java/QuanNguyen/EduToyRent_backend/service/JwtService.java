@@ -1,12 +1,17 @@
-package QuanNguyen.EduToyRent_backend.secutiry;
+package QuanNguyen.EduToyRent_backend.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+import jakarta.websocket.Decoder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +19,7 @@ import java.util.function.Function;
 
 
 @Component
-public class JwtUtil {
+public class JwtService {
     // Lấy giá trị SECRET_KEY từ file application.properties hoặc từ biến môi trường
     @Value("${jwt.secret}")
     private String SECRET_KEY;
@@ -38,10 +43,10 @@ public class JwtUtil {
     // Phương thức lấy tất cả các claim từ JWT token
     private Claims extractAllClaims(String token) {
         return Jwts.parser()
-                .setSigningKey(SECRET_KEY.getBytes())
+                .verifyWith(getKey())
                 .build()
-                .parseClaimsJws(token)
-                .getBody();
+                .parseSignedClaims(token)
+                .getPayload();
     }
 
     // Phương thức kiểm tra token đã hết hạn hay chưa
@@ -70,5 +75,10 @@ public class JwtUtil {
     public Boolean validateToken(String token, String username) {
         final String extractedUsername = extractUsername(token);
         return (extractedUsername.equals(username) && !isTokenExpired(token));
+    }
+
+    private SecretKey getKey(){
+        byte[] keyByte = Decoders.BASE64URL.decode(SECRET_KEY);
+        return Keys.hmacShaKeyFor(keyByte);
     }
 }
