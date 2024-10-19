@@ -1,6 +1,7 @@
 package QuanNguyen.EduToyRent_backend.Controller;
 
 import QuanNguyen.EduToyRent_backend.entity.UserLogin;
+import QuanNguyen.EduToyRent_backend.entity.UserRegister;
 import QuanNguyen.EduToyRent_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,4 +21,8 @@ public class AuthController {
         return userService.login(userLogin);
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody UserRegister userRegister){
+        return userService.register(userRegister);
+    }
 }

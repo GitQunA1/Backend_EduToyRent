@@ -1,6 +1,7 @@
 package QuanNguyen.EduToyRent_backend.service;
 
 import QuanNguyen.EduToyRent_backend.entity.User;
+import QuanNguyen.EduToyRent_backend.entity.UserPrinciple;
 import QuanNguyen.EduToyRent_backend.reposisoty.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,13 +21,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private UserRepo userRepo;
 
     @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        Optional<User> userOptional = userRepo.findByUsername(username);
+//        User user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+//        // Lấy danh sách vai trò của người dùng
+//        List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority(user.getRole()));
+//
+//        // Trả về đối tượng UserDetails với thông tin username, password và vai trò
+//        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
+//    }
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> userOptional = userRepo.findByUsername(username);
         User user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
-        // Lấy danh sách vai trò của người dùng
-        List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority(user.getRole()));
 
-        // Trả về đối tượng UserDetails với thông tin username, password và vai trò
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
+        // Thay vì trả về org.springframework.security.core.userdetails.User, trả về UserPrinciple
+        return new UserPrinciple(user);
     }
 }
